@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface BodyShapeOptionCardProps {
   imageUrl: string;
@@ -9,6 +9,30 @@ interface BodyShapeOptionCardProps {
 }
 
 const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, label, description, isSelected, onClick }) => {
+  const [imageSrc, setImageSrc] = useState<string>('');
+  const [imageError, setImageError] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Ensure the image URL is properly loaded from the public directory
+    const loadImage = async () => {
+      try {
+        // If the URL starts with a slash, it's a relative path from the public directory
+        if (imageUrl.startsWith('/')) {
+          setImageSrc(imageUrl);
+        } else {
+          // Otherwise, use the URL as is
+          setImageSrc(imageUrl);
+        }
+        setImageError(false);
+      } catch (error) {
+        console.error('Error loading image:', error);
+        setImageError(true);
+      }
+    };
+
+    loadImage();
+  }, [imageUrl]);
+
   return (
     <div
       onClick={onClick}
@@ -28,21 +52,26 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
       {/* Image directly on the glass panel */}
-      <div className="w-full flex-grow flex items-center justify-center mb-3 sm:mb-4 px-2">
-        <img
-          src={imageUrl}
-          alt={`${label} body shape`}
-          aria-hidden="true"
-          className={`
-            max-w-[60%] sm:max-w-[60%] max-h-[120px] sm:max-h-[160px] object-contain 
-            transform transition-all duration-300 ease-in-out
-            mix-blend-lighten /* Added to help with opaque SVG backgrounds */
-            ${isSelected 
-              ? 'scale-[1] opacity-100 img-silhouette-selected group-hover:scale-[1.03]' 
-              : 'scale-[0.9] opacity-80 img-silhouette-idle group-hover:scale-[0.95] group-hover:opacity-95'
-            }
-          `}
-        />
+      <div className="w-full flex-grow flex items-center justify-center mb-3 sm:mb-4 px-2 bg-black bg-opacity-20 rounded-xl py-2">
+        {!imageError ? (
+          <img
+            src={imageSrc}
+            alt={`${label} body shape`}
+            aria-hidden="true"
+            onError={() => setImageError(true)}
+            className={`
+              max-w-[60%] sm:max-w-[60%] max-h-[120px] sm:max-h-[160px] object-contain 
+              transform transition-all duration-300 ease-in-out
+              ${isSelected 
+                ? 'scale-[1] opacity-100 img-silhouette-selected group-hover:scale-[1.03]' 
+                : 'scale-[0.9] opacity-80 img-silhouette-idle group-hover:scale-[0.95] group-hover:opacity-95'
+              }
+            `}
+            style={{ mixBlendMode: 'screen' }}
+          />
+        ) : (
+          <div className="text-secondary text-sm">Image not available</div>
+        )}
       </div>
 
       {/* Text area below the image, directly on the glass */}
