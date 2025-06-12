@@ -3,8 +3,8 @@ import { BodyShapeImagesData, HeightOption, QuizData } from './types';
 
 export const TOTAL_QUIZ_STEPS = 6; // Gender, Height, Weight, Age, Belly Shape, Chest Shape
 
-// Updated to use relative paths to SVG files in a 'shapes' directory.
-// Ensure these SVG files exist and have transparent backgrounds.
+// Updated to use paths to SVG files in the 'public/shapes' directory.
+// Files in the public directory are served at the root path in Vite.
 export const bodyShapeImages: BodyShapeImagesData = {
     female: {
         belly: {
