@@ -1,0 +1,6 @@
+{
+  "name": "Fitly - Smart Clothing Size Quiz",
+  "description": "A React application that helps users find their perfect clothing size through a multi-step quiz, based on body measurements and shape.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
