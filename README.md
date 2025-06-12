@@ -1,14 +1,13 @@
-# Run and deploy your AI Studio app
+<<<<<<< HEAD
+# Fitly Smart Size Clothes
 
-This contains everything you need to run your app locally.
+A smart clothing size quiz application that helps users find their perfect fit.
 
 ## Run Locally
 
 **Prerequisites:**  Node.js
 
-
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the app:
    `npm run dev`
