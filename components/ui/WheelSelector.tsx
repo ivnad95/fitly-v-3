@@ -129,12 +129,22 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
         const itemHeight = window.innerWidth >= 640 ? 60 : 48;
         const snappedScrollTop = Math.round(wheel.scrollTop / itemHeight) * itemHeight;
         wheel.scrollTo({ top: snappedScrollTop, behavior: 'smooth' });
-      }, 100);
+      }, 150); // Increased timeout for better mobile responsiveness
       
       setScrollTimeout(timeout);
     };
 
-    wheel.addEventListener('scroll', handleScroll);
+    // Enhanced touch scrolling for iOS
+    wheel.style.webkitOverflowScrolling = 'touch';
+    wheel.style.scrollBehavior = 'smooth';
+    
+    wheel.addEventListener('scroll', handleScroll, { passive: true });
+    wheel.addEventListener('touchstart', () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    }, { passive: true });
+    
     return () => {
       wheel.removeEventListener('scroll', handleScroll);
       if (scrollTimeout) {
@@ -198,7 +208,12 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
           style={{
             scrollSnapType: 'y mandatory',
             msOverflowStyle: 'none',
-            scrollbarWidth: 'none'
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+            scrollBehavior: 'smooth',
+            // Enhanced mobile scrolling properties
+            willChange: 'scroll-position',
+            transform: 'translateZ(0)' // Force hardware acceleration
           }}
         >
           <div className="h-[72px] sm:h-[90px] flex-shrink-0"></div>
@@ -210,7 +225,8 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
               style={{
                 scrollSnapAlign: 'center',
                 transform: 'scale(0.75) rotateX(-20deg)',
-                opacity: '0.4'
+                opacity: '0.4',
+                willChange: 'transform, opacity'
               }}
             >
               {formatDisplayText(val)}

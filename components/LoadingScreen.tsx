@@ -9,7 +9,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({isVisible}) => {
   if(!isVisible) return null;
 
   return (
-    <QuizCard isVisible={isVisible} className="max-w-md w-full text-center" animationType="fade">
+    <QuizCard isVisible={isVisible} className="w-full max-w-md mx-auto text-center" animationType="fade">
         <div className="py-8 sm:py-10">
             <div 
               className="w-12 h-12 sm:w-14 sm:h-14 border-4 border-[rgba(var(--accent-color-rgb),0.2)] rounded-full animate-spin mx-auto mb-6 sm:mb-8"

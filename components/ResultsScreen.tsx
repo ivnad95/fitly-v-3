@@ -29,44 +29,40 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
 
   if (!results) {
     return (
-        <div className="w-full max-w-lg mx-auto flex-1 flex items-center justify-center py-4">
-          <QuizCard isVisible={isVisible} className="w-full" animationType="fade">
-               <div className="text-center py-8">
-                  <i className="fas fa-exclamation-circle text-3xl sm:text-4xl text-secondary mb-4"></i>
-                  <p className="text-secondary text-sm sm:text-base">No results to display. Please complete the quiz.</p>
-               </div>
-               <Button onClick={onRestartQuiz} variant="primary" size="large">
-                  <i className="fas fa-redo mr-2"></i>
-                  Take Quiz Again
-              </Button>
-          </QuizCard>
-        </div>
+        <QuizCard isVisible={isVisible} className="w-full max-w-md mx-auto" animationType="fade">
+             <div className="text-center py-8">
+                <i className="fas fa-exclamation-circle text-3xl sm:text-4xl text-secondary mb-4"></i>
+                <p className="text-secondary text-sm sm:text-base mb-6">No results to display. Please complete the quiz.</p>
+                <Button onClick={onRestartQuiz} variant="primary" size="large">
+                    <i className="fas fa-redo mr-2"></i>
+                    Take Quiz Again
+                </Button>
+             </div>
+        </QuizCard>
     );
   }
 
   return (
-    <div className="w-full max-w-lg mx-auto flex-1 flex items-start justify-center py-4">
-      <QuizCard isVisible={isVisible} className="w-full max-h-[calc(100vh-2rem)] overflow-y-auto" animationType="fade">
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">Your Size Recommendations</h1>
-          <p className="text-secondary text-sm sm:text-base">Based on your provided information</p>
+    <QuizCard isVisible={isVisible} className="w-full max-w-md mx-auto" animationType="fade">
+      <div className="text-center mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">Your Size Recommendations</h1>
+        <p className="text-secondary text-sm sm:text-base">Based on your provided information</p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
+        <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist/hips" />
+        <ResultItem title="Shoe Size (UK)" value={`UK ${results.shoeSizeUK}`} description="United Kingdom sizing" />
+        <ResultItem title="Shoe Size (EU)" value={`EU ${results.shoeSizeEU}`} description="European sizing" />
+        {/* Fit Recommendation can span full width or be styled as other items */}
+        <div className="sm:col-span-2">
+            <ResultItem title="Fit Recommendation" value={results.fitRecommendation} description={results.fitDescription} />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
-          <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist/hips" />
-          <ResultItem title="Shoe Size (UK)" value={`UK ${results.shoeSizeUK}`} description="United Kingdom sizing" />
-          <ResultItem title="Shoe Size (EU)" value={`EU ${results.shoeSizeEU}`} description="European sizing" />
-          {/* Fit Recommendation can span full width or be styled as other items */}
-          <div className="sm:col-span-2">
-              <ResultItem title="Fit Recommendation" value={results.fitRecommendation} description={results.fitDescription} />
-          </div>
-        </div>
-        <Button onClick={onRestartQuiz} variant="primary" size="large">
-          <i className="fas fa-redo mr-2.5"></i>
-          Take Quiz Again
-        </Button>
-      </QuizCard>
-    </div>
+      </div>
+      <Button onClick={onRestartQuiz} variant="primary" size="large">
+        <i className="fas fa-redo mr-2.5"></i>
+        Take Quiz Again
+      </Button>
+    </QuizCard>
   );
 };
 

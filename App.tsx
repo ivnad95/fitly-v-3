@@ -167,25 +167,25 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="min-h-[100dvh] flex flex-col items-center justify-start p-2 sm:p-4 py-4 sm:py-8 antialiased overflow-x-hidden touch-manipulation">
-      <WelcomeScreen onStartQuiz={handleStartQuiz} isVisible={currentScreen === 'welcome'} />
+    <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 sm:p-6 antialiased overflow-hidden touch-manipulation">
+      <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[100dvh] py-safe">
+        <WelcomeScreen onStartQuiz={handleStartQuiz} isVisible={currentScreen === 'welcome'} />
 
-      {/* Quiz content area: Only renders the QuizCard if currentScreen is 'quiz' AND not calculating */}
-      {currentScreen === 'quiz' && !isCalculating && (
-        <div className="w-full max-w-lg mx-auto flex-1 flex items-center justify-center">
+        {/* Quiz content area: Only renders the QuizCard if currentScreen is 'quiz' AND not calculating */}
+        {currentScreen === 'quiz' && !isCalculating && (
           <QuizCard isVisible={quizContentVisible} className="w-full" animationType="slide">
             <StepIndicator currentStep={currentStep} totalSteps={TOTAL_QUIZ_STEPS} />
             {renderStepContent()}
           </QuizCard>
-        </div>
-      )}
-      
-      {/* Loading Screen: Only renders if currentScreen is 'quiz' AND isCalculating */}
-      {currentScreen === 'quiz' && isCalculating && (
-         <LoadingScreen isVisible={true} /> // Directly pass true as its rendering is conditional
-      )}
-      
-      <ResultsScreen results={results} onRestartQuiz={handleRestartQuiz} isVisible={currentScreen === 'results'} />
+        )}
+        
+        {/* Loading Screen: Only renders if currentScreen is 'quiz' AND isCalculating */}
+        {currentScreen === 'quiz' && isCalculating && (
+           <LoadingScreen isVisible={true} />
+        )}
+        
+        <ResultsScreen results={results} onRestartQuiz={handleRestartQuiz} isVisible={currentScreen === 'results'} />
+      </div>
     </div>
   );
 };

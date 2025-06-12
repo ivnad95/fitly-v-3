@@ -11,7 +11,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStartQuiz, isVisible })
   if (!isVisible) return null; 
 
   return (
-    <QuizCard isVisible={isVisible} className="max-w-md w-full" animationType="fade">
+    <QuizCard isVisible={isVisible} className="w-full max-w-md mx-auto" animationType="fade">
       <div className="text-center mb-8 sm:mb-10">
         <h1 className="text-5xl sm:text-6xl font-bold text-primary mb-3">Fitly</h1>
         <p className="text-secondary text-lg sm:text-xl">Find your perfect clothing size.</p>

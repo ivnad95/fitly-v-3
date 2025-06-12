@@ -42,9 +42,9 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       className={`
         liquid-glass-panel group
         rounded-2xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] overflow-hidden
-        p-3 sm:p-4
-        min-h-[80px] sm:min-h-[120px] md:min-h-[140px]
-        flex flex-col items-center justify-between 
+        p-4 sm:p-5
+        aspect-square w-full
+        flex flex-col items-center justify-center 
         focus-visible:outline-none
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
       `}
@@ -60,7 +60,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
             aria-hidden="true"
             onError={() => setImageError(true)}
             className={`
-              max-w-[60%] sm:max-w-[65%] max-h-[50px] sm:max-h-[75px] md:max-h-[90px] object-contain 
+              max-w-[80%] sm:max-w-[85%] max-h-[80px] sm:max-h-[120px] md:max-h-[140px] object-contain 
               transform transition-all duration-300 ease-in-out
               ${isSelected 
                 ? 'scale-[1] opacity-100 group-hover:scale-[1.05]' 
