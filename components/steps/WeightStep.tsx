@@ -34,7 +34,13 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
         }}
         className="mb-8"
       />
-      <Button onClick={onNext} disabled={!isValidWeight} variant="primary">
+      <Button 
+        onClick={onNext} 
+        disabled={!isValidWeight} 
+        variant="primary"
+        className="w-full py-4 px-6 touch-manipulation min-h-[48px]"
+        aria-label="Continue to next step"
+      >
         Continue
       </Button>
     </div>

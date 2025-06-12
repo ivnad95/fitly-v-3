@@ -43,7 +43,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
         liquid-glass-panel group
         rounded-2xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] overflow-hidden
         p-3 sm:p-4
-        min-h-[100px] sm:min-h-[140px] md:min-h-[160px]
+        min-h-[80px] sm:min-h-[120px] md:min-h-[140px]
         flex flex-col items-center justify-between 
         focus-visible:outline-none
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
@@ -52,7 +52,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
       {/* Image directly on the glass panel */}
-      <div className="w-full flex-grow flex items-center justify-center mb-1 sm:mb-2 px-2 bg-black bg-opacity-20 rounded-xl py-1">
+      <div className="w-full flex-grow flex items-center justify-center mb-2 sm:mb-3">
         {!imageError ? (
           <img
             src={imageSrc}
@@ -60,30 +60,24 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
             aria-hidden="true"
             onError={() => setImageError(true)}
             className={`
-              max-w-[60%] sm:max-w-[60%] max-h-[60px] sm:max-h-[90px] md:max-h-[110px] object-contain 
+              max-w-[60%] sm:max-w-[65%] max-h-[50px] sm:max-h-[75px] md:max-h-[90px] object-contain 
               transform transition-all duration-300 ease-in-out
               ${isSelected 
-                ? 'scale-[1] opacity-100 img-silhouette-selected group-hover:scale-[1.03]' 
-                : 'scale-[0.9] opacity-80 img-silhouette-idle group-hover:scale-[0.95] group-hover:opacity-95'
+                ? 'scale-[1] opacity-100 group-hover:scale-[1.05]' 
+                : 'scale-[0.9] opacity-70 group-hover:scale-[0.95] group-hover:opacity-85'
               }
             `}
-            style={{ mixBlendMode: 'screen' }}
           />
         ) : (
           <div className="text-secondary text-sm">Image not available</div>
         )}
       </div>
 
-      {/* Text area below the image, directly on the glass */}
-      <div className="text-center w-full mt-auto pt-0.5 sm:pt-1">
-        <div className={`
-          text-sm sm:text-base font-semibold
-          ${isSelected ? 'text-primary' : 'text-secondary group-hover:text-primary'}
-          transition-colors duration-200
-          `}
-        >
+      {/* Label only */}
+      <div className="text-center">
+        <h3 className="text-sm sm:text-base font-semibold text-white">
           {label}
-        </div>
+        </h3>
       </div>
     </div>
   );

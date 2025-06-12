@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1e293b">
     <title>Fitly - Smart Clothing Size Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -25,6 +29,36 @@
       }
       .value-updated {
         animation: value-pulse 0.4s ease-in-out;
+      }
+      
+      /* Mobile touch optimizations */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      /* Improve touch targets */
+      button, a, [role="button"], input, select, textarea {
+        touch-action: manipulation;
+      }
+      
+      /* Optimize for mobile performance */
+      .liquid-glass-panel {
+        will-change: transform, opacity;
+      }
+      
+      /* Prevent text selection on interactive elements */
+      button, .selector-item, [role="button"] {
+        user-select: none;
+      }
+      
+      /* Add safe area insets for notched devices */
+      @supports(padding: max(0px)) {
+        body {
+          padding-left: env(safe-area-inset-left);
+          padding-right: env(safe-area-inset-right);
+          padding-top: env(safe-area-inset-top);
+          padding-bottom: env(safe-area-inset-bottom);
+        }
       }
     </style>
     <style>

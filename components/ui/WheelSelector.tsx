@@ -60,8 +60,8 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
     const valueIndex = values.indexOf(numValue);
     if (valueIndex === -1) return;
     
-    // Responsive item height: 40px on mobile, 50px on larger screens
-    const itemHeight = window.innerWidth >= 640 ? 50 : 40;
+    // Responsive item height: 48px on mobile, 60px on larger screens
+    const itemHeight = window.innerWidth >= 640 ? 60 : 48;
     const scrollTop = valueIndex * itemHeight;
     
     wheelRef.current.scrollTo({ top: scrollTop, behavior });
@@ -71,8 +71,8 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
   const updateActiveItem = () => {
     if (!wheelRef.current) return;
     
-    // Responsive item height: 40px on mobile, 50px on larger screens
-    const itemHeight = window.innerWidth >= 640 ? 50 : 40;
+    // Responsive item height: 48px on mobile, 60px on larger screens
+    const itemHeight = window.innerWidth >= 640 ? 60 : 48;
     const centeredIndex = Math.round(wheelRef.current.scrollTop / itemHeight);
     const items = wheelRef.current.querySelectorAll('.selector-item');
     
@@ -125,8 +125,8 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
       requestAnimationFrame(updateActiveItem);
       
       const timeout = setTimeout(() => {
-        // Responsive item height: 40px on mobile, 50px on larger screens
-        const itemHeight = window.innerWidth >= 640 ? 50 : 40;
+        // Responsive item height: 48px on mobile, 60px on larger screens
+        const itemHeight = window.innerWidth >= 640 ? 60 : 48;
         const snappedScrollTop = Math.round(wheel.scrollTop / itemHeight) * itemHeight;
         wheel.scrollTo({ top: snappedScrollTop, behavior: 'smooth' });
       }, 100);
@@ -154,7 +154,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
     <div className={`flex flex-col items-center ${className}`}>
       {/* Current Value Display */}
       <div 
-        className="text-center text-5xl font-extrabold text-primary my-6"
+        className="text-center text-3xl sm:text-4xl font-extrabold text-primary my-4 sm:my-6"
         style={{ textShadow: '0 0 15px rgba(59, 130, 246, 0.5)' }}
       >
         {value ? formatDisplayText(parseInt(value)) : ''}
@@ -185,11 +185,11 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
       )}
 
       {/* Selector Wheel */}
-      <div className="relative h-[180px] sm:h-[220px] overflow-hidden" style={{
+      <div className="relative h-[192px] sm:h-[240px] overflow-hidden" style={{
         WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
         maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)'
       }}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[40px] sm:h-[50px] pointer-events-none border-t-2 border-b-2 border-blue-500 border-opacity-50" style={{
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[48px] sm:h-[60px] pointer-events-none border-t-2 border-b-2 border-blue-500 border-opacity-50" style={{
           background: 'linear-gradient(to right, transparent, rgba(59, 130, 246, 0.05), transparent)'
         }}></div>
         <div 
@@ -201,11 +201,11 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
             scrollbarWidth: 'none'
           }}
         >
-          <div className="h-[70px] sm:h-[85px] flex-shrink-0"></div>
+          <div className="h-[72px] sm:h-[90px] flex-shrink-0"></div>
           {values.map(val => (
             <div 
               key={val}
-              className="selector-item h-[40px] sm:h-[50px] flex items-center justify-center text-lg sm:text-2xl font-medium text-gray-500 transition-all duration-400"
+              className="selector-item h-[48px] sm:h-[60px] flex items-center justify-center text-base sm:text-xl font-medium text-gray-500 transition-all duration-400 touch-manipulation"
               data-value={val.toString()}
               style={{
                 scrollSnapAlign: 'center',
@@ -216,7 +216,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
               {formatDisplayText(val)}
             </div>
           ))}
-          <div className="h-[70px] sm:h-[85px] flex-shrink-0"></div>
+          <div className="h-[72px] sm:h-[90px] flex-shrink-0"></div>
         </div>
       </div>
     </div>

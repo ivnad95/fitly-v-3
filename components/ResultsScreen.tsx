@@ -17,10 +17,10 @@ interface ResultItemProps {
 
 const ResultItem: React.FC<ResultItemProps> = ({ title, value, description }) => (
     // Each ResultItem is now also a liquid-glass-panel for consistency
-    <div className="liquid-glass-panel p-3 sm:p-4 text-center rounded-xl"> {/* Slightly smaller radius for items */}
-        <h3 className="text-xs font-semibold text-tertiary mb-1 uppercase tracking-wider">{title}</h3>
-        <p className="text-lg sm:text-xl font-bold text-accent mb-1">{value}</p>
-        <p className="text-xs text-secondary opacity-90 leading-tight">{description}</p>
+    <div className="liquid-glass-panel p-3 sm:p-4 rounded-2xl text-center"> {/* Updated radius */}
+        <h3 className="text-primary font-semibold text-base sm:text-lg mb-1 sm:mb-2">{title}</h3>
+        <p className="text-white text-xl sm:text-2xl font-bold mb-1">{value}</p>
+        <p className="text-secondary text-xs sm:text-sm">{description}</p>
     </div>
 );
 
@@ -51,7 +51,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
           <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">Your Size Recommendations</h1>
           <p className="text-secondary text-sm sm:text-base">Based on your provided information</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
           <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
           <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist/hips" />
           <ResultItem title="Shoe Size (UK)" value={`UK ${results.shoeSizeUK}`} description="United Kingdom sizing" />

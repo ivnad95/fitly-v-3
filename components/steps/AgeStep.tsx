@@ -24,7 +24,13 @@ const AgeStep: React.FC<AgeStepProps> = ({ age, onAgeChange, onNext }) => {
         unit="years"
         className="mb-8"
       />
-      <Button onClick={onNext} disabled={!isValidAge} variant="primary">
+      <Button 
+        onClick={onNext} 
+        disabled={!isValidAge} 
+        variant="primary"
+        className="w-full py-4 px-6 touch-manipulation min-h-[48px]"
+        aria-label="Continue to next step"
+      >
         Continue
       </Button>
     </div>

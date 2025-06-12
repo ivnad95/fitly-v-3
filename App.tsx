@@ -167,7 +167,7 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="min-h-[100dvh] flex flex-col items-center justify-start p-2 sm:p-4 py-4 sm:py-8 antialiased overflow-x-hidden">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-start p-2 sm:p-4 py-4 sm:py-8 antialiased overflow-x-hidden touch-manipulation">
       <WelcomeScreen onStartQuiz={handleStartQuiz} isVisible={currentScreen === 'welcome'} />
 
       {/* Quiz content area: Only renders the QuizCard if currentScreen is 'quiz' AND not calculating */}

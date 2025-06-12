@@ -20,7 +20,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ children, isVisible, className = ''
     }
   }, [isVisible]);
 
-  const baseClasses = "liquid-glass-panel p-4 sm:p-6 mx-auto transform transition-all";
+  const baseClasses = "liquid-glass-panel p-3 sm:p-5 md:p-6 mx-auto transform transition-all";
   // Smoother, slightly springy easing, common in iOS animations
   const easing = "ease-[cubic-bezier(0.32,0.72,0,1)]"; 
 
