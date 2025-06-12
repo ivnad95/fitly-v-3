@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Height Selector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the enhanced height selector */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #111827);
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
+        }
+
+        /* --- Animations --- */
+        @keyframes value-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .value-updated {
+            animation: value-pulse 0.4s ease-in-out;
+        }
+
+        /* --- Main Component Styling --- */
+        .card {
+            background-color: rgba(17, 24, 39, 0.7); /* bg-gray-900 with opacity */
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        /* --- Unit Toggle Switch --- */
+        .toggle-container {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .toggle-bg {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            width: calc(50% - 4px);
+            background-color: #3B82F6; /* blue-500 */
+            border-radius: 9999px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .toggle-btn {
+            position: relative;
+            z-index: 10;
+            transition: color 0.3s ease;
+        }
+
+        /* --- Selector Wheel --- */
+        .selector-container {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+        .selector-wheel {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100%;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .selector-wheel::-webkit-scrollbar {
+            display: none;
+        }
+        .selector-item {
+            scroll-snap-align: center;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem; /* 24px */
+            font-weight: 500;
+            color: #6B7280; /* gray-500 */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.75) rotateX(-20deg);
+            opacity: 0.4;
+        }
+        .selector-padding {
+            height: 85px; /* (container_height - item_height) / 2 */
+            flex-shrink: 0;
+        }
+        .selector-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 50px;
+            pointer-events: none;
+            border-top: 2px solid rgba(59, 130, 246, 0.5);
+            border-bottom: 2px solid rgba(59, 130, 246, 0.5);
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.05), transparent);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="card w-full max-w-sm mx-auto rounded-3xl p-6 text-white">
+        <!-- Header -->
+        <h1 class="text-2xl font-bold text-center text-gray-100">Select Height</h1>
+        
+        <!-- Current Value Display -->
+        <div id="selectedValue" class="text-center text-6xl font-extrabold text-blue-400 my-8" style="text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);">175 cm</div>
+
+        <!-- Unit Toggle -->
+        <div class="flex justify-center mb-8">
+            <div class="toggle-container p-1 rounded-full flex items-center w-40">
+                <div id="toggleBg" class="toggle-bg"></div>
+                <button id="cmBtn" class="toggle-btn w-1/2 py-1.5 text-sm font-semibold text-white">cm</button>
+                <button id="ftBtn" class="toggle-btn w-1/2 py-1.5 text-sm font-semibold text-gray-400">ft/in</button>
+            </div>
+        </div>
+        
+        <!-- Height Selector -->
+        <div class="selector-container">
+            <div class="selector-indicator"></div>
+            <div id="heightWheel" class="selector-wheel">
+                <!-- Items populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const heightWheel = document.getElementById('heightWheel');
+            const selectedValueDisplay = document.getElementById('selectedValue');
+            const cmBtn = document.getElementById('cmBtn');
+            const ftBtn = document.getElementById('ftBtn');
+            const toggleBg = document.getElementById('toggleBg');
+
+            // State
+            let currentUnit = 'cm';
+            let scrollTimeout;
+
+            // Constants
+            const MIN_CM = 120;
+            const MAX_CM = 220;
+            const MIN_INCHES = 48; // 4 ft
+            const MAX_INCHES = 84; // 7 ft
+            const ITEM_HEIGHT = 50;
+
+            /**
+             * Converts feet and inches to a string representation.
+             */
+            function inchesToFeetAndInches(totalInches) {
+                const feet = Math.floor(totalInches / 12);
+                const inches = totalInches % 12;
+                return `${feet}' ${inches}"`;
+            }
+            
+            /**
+             * Populates the height wheel.
+             */
+            function populateWheel(unit) {
+                heightWheel.innerHTML = ''; // Clear existing items
+                
+                const topPadding = document.createElement('div');
+                topPadding.className = 'selector-padding';
+                heightWheel.appendChild(topPadding);
+
+                const values = (unit === 'cm') 
+                    ? Array.from({ length: MAX_CM - MIN_CM + 1 }, (_, i) => ({ value: MIN_CM + i, text: `${MIN_CM + i} cm` }))
+                    : Array.from({ length: MAX_INCHES - MIN_INCHES + 1 }, (_, i) => ({ value: MIN_INCHES + i, text: inchesToFeetAndInches(MIN_INCHES + i) }));
+
+                values.forEach(val => {
+                    const item = document.createElement('div');
+                    item.className = 'selector-item';
+                    item.textContent = val.text;
+                    item.dataset.value = val.value;
+                    heightWheel.appendChild(item);
+                });
+
+                const bottomPadding = document.createElement('div');
+                bottomPadding.className = 'selector-padding';
+                heightWheel.appendChild(bottomPadding);
+
+                // Set initial value and update immediately
+                const initialValue = (unit === 'cm') ? 175 : 69; // 5'9"
+                scrollToValue(initialValue, 'auto');
+                // A small delay ensures the DOM is ready for the update calculation
+                setTimeout(updateActiveItem, 0); 
+            }
+            
+            /**
+             * Scrolls the wheel to a specific value.
+             */
+            function scrollToValue(value, behavior = 'smooth') {
+                const itemToSelect = heightWheel.querySelector(`[data-value="${value}"]`);
+                if (itemToSelect) {
+                    const itemIndex = Array.from(heightWheel.querySelectorAll('.selector-item')).indexOf(itemToSelect);
+                    const scrollTop = itemIndex * ITEM_HEIGHT;
+                    heightWheel.scrollTo({ top: scrollTop, behavior });
+                }
+            }
+            
+            /**
+             * Updates the styles of items and the main display based on scroll position.
+             */
+            function updateActiveItem() {
+                const centeredIndex = Math.round(heightWheel.scrollTop / ITEM_HEIGHT);
+                const items = heightWheel.querySelectorAll('.selector-item');
+                
+                items.forEach((item, index) => {
+                    if (index === centeredIndex) {
+                        item.style.transform = 'scale(1) rotateX(0deg)';
+                        item.style.opacity = '1';
+                        item.style.color = '#EFF6FF'; // gray-50
+                        if (selectedValueDisplay.textContent !== item.textContent) {
+                           selectedValueDisplay.textContent = item.textContent;
+                           // Trigger animation
+                           selectedValueDisplay.classList.remove('value-updated');
+                           void selectedValueDisplay.offsetWidth; // Reflow
+                           selectedValueDisplay.classList.add('value-updated');
+                        }
+                    } else {
+                        item.style.transform = 'scale(0.75) rotateX(-20deg)';
+                        item.style.opacity = '0.4';
+                        item.style.color = '#6B7280'; // gray-500
+                    }
+                });
+            }
+
+            // --- Event Listeners ---
+            heightWheel.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                requestAnimationFrame(updateActiveItem);
+                scrollTimeout = setTimeout(() => {
+                    const snappedScrollTop = Math.round(heightWheel.scrollTop / ITEM_HEIGHT) * ITEM_HEIGHT;
+                    heightWheel.scrollTo({ top: snappedScrollTop, behavior: 'smooth' });
+                }, 100);
+            });
+
+            cmBtn.addEventListener('click', () => {
+                if (currentUnit === 'ft') {
+                    currentUnit = 'cm';
+                    toggleBg.style.transform = 'translateX(0%)';
+                    cmBtn.classList.replace('text-gray-400', 'text-white');
+                    ftBtn.classList.replace('text-white', 'text-gray-400');
+                    populateWheel('cm');
+                }
+            });
+
+            ftBtn.addEventListener('click', () => {
+                if (currentUnit === 'cm') {
+                    currentUnit = 'ft';
+                    toggleBg.style.transform = 'translateX(calc(100% + 4px))';
+                    ftBtn.classList.replace('text-gray-400', 'text-white');
+                    cmBtn.classList.replace('text-white', 'text-gray-400');
+                    populateWheel('ft');
+                }
+            });
+
+            // Initial population of the wheel
+            populateWheel(currentUnit);
+        });
+    </script>
+</body>
+</html>

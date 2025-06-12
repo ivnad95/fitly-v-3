@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputField } from '../ui/InputField';
 import Button from '../ui/Button';
+import WheelSelector from '../ui/WheelSelector';
 
 interface WeightStepProps {
   weight: string; 
@@ -10,20 +10,28 @@ interface WeightStepProps {
 
 const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext }) => {
   const weightNum = parseFloat(weight);
-  const isValidWeight = !isNaN(weightNum) && weightNum >= 30 && weightNum <= 200;
+  const isValidWeight = !isNaN(weightNum) && weightNum >= 40 && weightNum <= 150;
+
+  // Convert kg to pounds
+  const kgToPounds = (kg: number): string => {
+    const pounds = Math.round(kg * 2.20462);
+    return `${pounds} lbs`;
+  };
 
   return (
     <div>
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-10 text-primary">Your Weight</h2>
-      <InputField
-        id="weight-input"
-        label="Weight (kg)"
-        type="number"
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-primary">Your Weight</h2>
+      <WheelSelector
         value={weight}
-        onChange={(e) => onWeightChange(e.target.value)}
-        placeholder="Enter your weight"
-        min={30}
-        max={200}
+        onChange={onWeightChange}
+        minValue={40}
+        maxValue={150}
+        step={1}
+        unit="kg"
+        alternateUnit={{
+          label: "lbs",
+          conversionFn: kgToPounds
+        }}
         className="mb-8"
       />
       <Button onClick={onNext} disabled={!isValidWeight} variant="primary">

@@ -1,8 +1,6 @@
 import React from 'react';
-import { SelectField } from '../ui/InputField';
 import Button from '../ui/Button';
-import { heightOptions } from '../../constants';
-import { HeightOption } from '../../types';
+import WheelSelector from '../ui/WheelSelector';
 
 interface HeightStepProps {
   height: string; 
@@ -11,16 +9,28 @@ interface HeightStepProps {
 }
 
 const HeightStep: React.FC<HeightStepProps> = ({ height, onHeightChange, onNext }) => {
+  // Convert feet and inches to a string representation
+  const cmToFeetAndInches = (cm: number): string => {
+    const totalInches = Math.round(cm / 2.54);
+    const feet = Math.floor(totalInches / 12);
+    const inches = totalInches % 12;
+    return `${feet}' ${inches}"`;
+  };
+
   return (
     <div>
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-10 text-primary">Your Height</h2>
-      <SelectField
-        id="height-input"
-        label="Height (cm)"
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-primary">Your Height</h2>
+      <WheelSelector
         value={height}
-        onChange={(e) => onHeightChange(e.target.value)}
-        options={heightOptions as HeightOption[]}
-        placeholder="Select your height"
+        onChange={onHeightChange}
+        minValue={150}
+        maxValue={200}
+        step={1}
+        unit="cm"
+        alternateUnit={{
+          label: "ft/in",
+          conversionFn: cmToFeetAndInches
+        }}
         className="mb-8"
       />
       <Button onClick={onNext} disabled={!height} variant="primary">

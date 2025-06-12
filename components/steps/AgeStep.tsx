@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputField } from '../ui/InputField';
 import Button from '../ui/Button';
+import WheelSelector from '../ui/WheelSelector';
 
 interface AgeStepProps {
   age: string; 
@@ -14,16 +14,14 @@ const AgeStep: React.FC<AgeStepProps> = ({ age, onAgeChange, onNext }) => {
   
   return (
     <div>
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-10 text-primary">Your Age</h2>
-      <InputField
-        id="age-input"
-        label="Age (years)"
-        type="number"
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-primary">Your Age</h2>
+      <WheelSelector
         value={age}
-        onChange={(e) => onAgeChange(e.target.value)}
-        placeholder="Enter your age"
-        min={16}
-        max={100}
+        onChange={onAgeChange}
+        minValue={16}
+        maxValue={100}
+        step={1}
+        unit="years"
         className="mb-8"
       />
       <Button onClick={onNext} disabled={!isValidAge} variant="primary">
