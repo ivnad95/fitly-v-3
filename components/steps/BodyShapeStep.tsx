@@ -31,8 +31,8 @@ const BodyShapeStep: React.FC<BodyShapeStepProps> = ({
   return (
     <div>
       <h2 className="text-2xl sm:text-3xl font-bold text-center mb-1.5 text-primary">{title}</h2>
-      <p className="text-center text-secondary mb-6 sm:mb-8 text-sm">{subtitle}</p>
-      <div className="grid grid-cols-1 gap-3 sm:gap-4 mb-6 sm:mb-8"> {/* Always single column for better mobile fit */}
+      <p className="text-center text-secondary mb-3 sm:mb-4 text-sm">{subtitle}</p>
+      <div className="grid grid-cols-1 gap-2 sm:gap-3 mb-4 sm:mb-6"> {/* Always single column for better mobile fit */}
         {Object.entries(shapes).map(([key, imageUrl]) => (
           <BodyShapeOptionCard
             key={key}

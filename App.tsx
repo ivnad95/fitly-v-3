@@ -167,15 +167,17 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="min-h-[100dvh] max-h-[100dvh] flex flex-col items-center justify-center p-2 sm:p-4 overflow-hidden antialiased">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-start p-2 sm:p-4 py-4 sm:py-8 antialiased overflow-x-hidden">
       <WelcomeScreen onStartQuiz={handleStartQuiz} isVisible={currentScreen === 'welcome'} />
 
       {/* Quiz content area: Only renders the QuizCard if currentScreen is 'quiz' AND not calculating */}
       {currentScreen === 'quiz' && !isCalculating && (
-        <QuizCard isVisible={quizContentVisible} className="max-w-[95%] w-full" animationType="slide">
-          <StepIndicator currentStep={currentStep} totalSteps={TOTAL_QUIZ_STEPS} />
-          {renderStepContent()}
-        </QuizCard>
+        <div className="w-full max-w-lg mx-auto flex-1 flex items-center justify-center">
+          <QuizCard isVisible={quizContentVisible} className="w-full" animationType="slide">
+            <StepIndicator currentStep={currentStep} totalSteps={TOTAL_QUIZ_STEPS} />
+            {renderStepContent()}
+          </QuizCard>
+        </div>
       )}
       
       {/* Loading Screen: Only renders if currentScreen is 'quiz' AND isCalculating */}
