@@ -35,7 +35,7 @@ const BodyShapeStep: React.FC<BodyShapeStepProps> = ({
         <p className="text-secondary text-sm px-1">{subtitle}</p>
       </div>
       <div className="flex-1 flex flex-col justify-center min-h-0">
-        <div className="grid grid-cols-3 gap-3 px-2"> {/* 3 columns for square buttons */}
+        <div className="flex flex-col gap-3 px-2"> {/* Vertical layout for square buttons */}
           {Object.entries(shapes).map(([key, imageUrl]) => (
             <BodyShapeOptionCard
               key={key}

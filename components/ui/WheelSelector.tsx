@@ -37,7 +37,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
   const CENTER_INDEX = Math.floor(VISIBLE_ITEMS / 2);
   const FRICTION = 0.85; // More aggressive friction for faster deceleration
   const MIN_VELOCITY = 0.2; // Lower threshold for better responsiveness
-  const VELOCITY_MULTIPLIER = 12; // Increased velocity scaling for faster scrolling  // Generate values array based on min, max, and step
+  const VELOCITY_MULTIPLIER = 24; // Increased velocity scaling for much faster scrolling
   const generateValues = () => {
     const values = [];
     for (let i = minValue; i <= maxValue; i += step) {
@@ -254,7 +254,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
       if (!wheel) return;
       
       // Enhanced wheel scrolling with better velocity
-      wheel.scrollTop += e.deltaY * 0.8; // Slightly reduce wheel sensitivity for smoother control
+      wheel.scrollTop += e.deltaY * 1.5; // Increased wheel sensitivity for faster scrolling
       requestAnimationFrame(updateActiveItem);
       
       if (scrollEndTimer) clearTimeout(scrollEndTimer);
