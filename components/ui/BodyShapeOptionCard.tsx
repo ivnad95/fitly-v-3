@@ -8,7 +8,7 @@ interface BodyShapeOptionCardProps {
   onClick: () => void;
 }
 
-const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, label, description, isSelected, onClick }) => {
+const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, label, description: _description, isSelected, onClick }) => {
   const [imageSrc, setImageSrc] = useState<string>('');
   const [imageError, setImageError] = useState<boolean>(false);
 
@@ -49,7 +49,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
       `}
       style={{ willChange: 'transform, opacity, background-color, border-color, box-shadow' }}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
+      onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
       {/* Image directly on the glass panel */}
       <div className="w-full flex-grow flex items-center justify-center mb-2 sm:mb-3">

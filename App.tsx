@@ -40,7 +40,7 @@ const App: React.FC = () => {
   }, []);
 
   const updateQuizData = useCallback(<K extends keyof QuizData>(key: K, value: QuizData[K]) => {
-    setQuizData(prev => ({ ...prev, [key]: value }));
+    setQuizData((prev: QuizData) => ({ ...prev, [key]: value }));
   }, []);
 
   const handleNextStep = useCallback(() => {
@@ -49,7 +49,7 @@ const App: React.FC = () => {
 
     setTimeout(() => {
       if (currentStep < TOTAL_QUIZ_STEPS) {
-        setCurrentStep(prev => prev + 1);
+        setCurrentStep((prev: number) => prev + 1);
         // setQuizContentVisible(true); // Let useEffect handle this for entry animation
       } else {
         // setCurrentScreen('quiz'); // Stays on quiz screen while calculating
@@ -152,15 +152,15 @@ const App: React.FC = () => {
       case 1:
         return <GenderStep selectedGender={quizData.gender} onSelectGender={handleGenderSelect} />;
       case 2:
-        return <HeightStep height={quizData.height ? String(quizData.height) : ""} onHeightChange={(h) => updateQuizData('height', parseInt(h) || 0)} onNext={handleNextStep} />;
+        return <HeightStep height={String(quizData.height)} onHeightChange={(h: string) => updateQuizData('height', parseInt(h) || 0)} onNext={handleNextStep} />;
       case 3:
-        return <WeightStep weight={quizData.weight ? String(quizData.weight) : ""} onWeightChange={(w) => updateQuizData('weight', parseInt(w) || 0)} onNext={handleNextStep} />;
+        return <WeightStep weight={String(quizData.weight)} onWeightChange={(w: string) => updateQuizData('weight', parseInt(w) || 0)} onNext={handleNextStep} />;
       case 4:
-        return <AgeStep age={quizData.age ? String(quizData.age) : ""} onAgeChange={(a) => updateQuizData('age', parseInt(a) || 0)} onNext={handleNextStep} />;
+        return <AgeStep age={String(quizData.age)} onAgeChange={(a: string) => updateQuizData('age', parseInt(a) || 0)} onNext={handleNextStep} />;
       case 5:
-        return <BodyShapeStep gender={quizData.gender} shapeType="belly" selectedShape={quizData.bellyShape} onSelectShape={handleBellyShapeSelect} title="Select Your Belly Shape" subtitle="Choose the side view that best matches your belly shape"/>;
+        return <BodyShapeStep gender={quizData.gender} shapeType="belly" selectedShape={quizData.bellyShape} onSelectShape={handleBellyShapeSelect as (shape: BellyShapeKey | ChestShapeKey) => void} title="Select Your Belly Shape" subtitle="Choose the side view that best matches your belly shape"/>;
       case 6:
-        return <BodyShapeStep gender={quizData.gender} shapeType="chest" selectedShape={quizData.chestShape} onSelectShape={handleChestShapeSelect} title="Select Your Chest Shape" subtitle="Choose the front view that best matches your chest/torso shape"/>;
+        return <BodyShapeStep gender={quizData.gender} shapeType="chest" selectedShape={quizData.chestShape} onSelectShape={handleChestShapeSelect as (shape: BellyShapeKey | ChestShapeKey) => void} title="Select Your Chest Shape" subtitle="Choose the front view that best matches your chest/torso shape"/>;
       default:
         return null;
     }
