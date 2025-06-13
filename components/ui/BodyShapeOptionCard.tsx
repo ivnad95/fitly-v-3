@@ -42,9 +42,9 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       className={`
         liquid-glass-panel group
         rounded-2xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] overflow-hidden
-        p-3 sm:p-4
-        h-20 w-full
-        flex flex-row items-center 
+        p-4 sm:p-5
+        aspect-square w-full
+        flex flex-col items-center justify-center 
         focus-visible:outline-none
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
         ${isSelected 
@@ -55,8 +55,8 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       style={{ willChange: 'transform, opacity, background-color, border-color, box-shadow' }}
       onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
-      {/* Image on the left */}
-      <div className="w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0">
+      {/* Image */}
+      <div className="w-16 h-16 flex items-center justify-center mb-3 flex-shrink-0">
         {!imageError ? (
           <img
             src={imageSrc}
@@ -67,8 +67,8 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
               w-full h-full object-contain 
               transform transition-all duration-300 ease-in-out
               ${isSelected 
-                ? 'scale-[1.1] opacity-100' 
-                : 'scale-[1] opacity-80 group-hover:scale-[1.05] group-hover:opacity-95'
+                ? 'scale-[1.05] opacity-100' 
+                : 'scale-[1] opacity-80 group-hover:scale-[1.02] group-hover:opacity-95'
               }
             `}
           />
@@ -77,8 +77,8 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
         )}
       </div>
 
-      {/* Label on the right */}
-      <div className="flex-1 text-left">
+      {/* Label */}
+      <div className="text-center">
         <h3 className="text-sm sm:text-base font-semibold text-white">
           {label}
         </h3>
