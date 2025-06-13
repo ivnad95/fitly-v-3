@@ -43,7 +43,7 @@ const HeightStep: React.FC<HeightStepProps> = ({ height, onHeightChange, onNext 
           }}
           className="mb-6"
         />
-        <div className="mt-auto pt-4">
+        <div className="mt-auto pt-4 pb-4 px-4">
           <Button 
             onClick={onNext} 
             disabled={!height} 
