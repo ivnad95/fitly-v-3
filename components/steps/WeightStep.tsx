@@ -30,7 +30,7 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
       <div className="flex-shrink-0 text-center mb-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-primary">Your Weight</h2>
       </div>
-      <div className="flex-1 flex flex-col justify-center min-h-0">
+      <div className="flex-1 flex flex-col justify-center min-h-0 pb-4">
         <WheelSelector
           value={weight}
           onChange={onWeightChange}
@@ -44,15 +44,17 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
           }}
           className="mb-6"
         />
-        <Button 
-          onClick={onNext} 
-          disabled={!isValidWeight} 
-          variant="primary"
-          className="w-full py-4 px-6 touch-manipulation min-h-[48px] flex-shrink-0"
-          aria-label="Continue to next step"
-        >
-          Continue
-        </Button>
+        <div className="mt-auto pt-4">
+          <Button 
+            onClick={onNext} 
+            disabled={!isValidWeight} 
+            variant="primary"
+            className="w-full py-4 px-6 touch-manipulation min-h-[48px] flex-shrink-0"
+            aria-label="Continue to next step"
+          >
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );
