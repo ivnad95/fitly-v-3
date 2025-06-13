@@ -26,7 +26,7 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto h-full flex flex-col">
+    <div className="w-full max-w-sm mx-auto flex flex-col">
       <div className="flex-shrink-0 text-center mb-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-primary">Your Weight</h2>
       </div>

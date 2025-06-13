@@ -29,7 +29,7 @@ const BodyShapeStep: React.FC<BodyShapeStepProps> = ({
   const descriptions = shapeType === 'belly' ? bellyShapeDescriptions : chestShapeDescriptions;
 
   return (
-    <div className="w-full max-w-sm mx-auto h-full flex flex-col">
+    <div className="w-full max-w-sm mx-auto flex flex-col">
       <div className="flex-shrink-0 text-center mb-4">
         <h2 className="text-xl font-bold text-primary mb-1">{title}</h2>
         <p className="text-secondary text-sm px-1">{subtitle}</p>
