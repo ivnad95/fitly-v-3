@@ -29,7 +29,7 @@ const HeightStep: React.FC<HeightStepProps> = ({ height, onHeightChange, onNext 
       <div className="flex-shrink-0 text-center mb-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-primary">Your Height</h2>
       </div>
-      <div className="flex-1 flex flex-col justify-center min-h-0 pb-4">
+      <div className="flex-1 flex flex-col justify-center min-h-0 pb-6">
         <WheelSelector
           value={height}
           onChange={onHeightChange}

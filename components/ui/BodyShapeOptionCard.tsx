@@ -43,7 +43,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
         liquid-glass-panel group
         rounded-2xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] overflow-hidden
         p-2 sm:p-3
-        aspect-square w-full max-w-[100px] max-h-[100px]
+        aspect-square w-full max-w-[130px] max-h-[130px]
         flex flex-col items-center justify-center 
         focus-visible:outline-none
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
@@ -56,7 +56,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
       {/* Image */}
-      <div className="w-12 h-12 flex items-center justify-center mb-2 flex-shrink-0">
+      <div className="w-16 h-16 flex items-center justify-center mb-2 flex-shrink-0">
         {!imageError ? (
           <img
             src={imageSrc}
