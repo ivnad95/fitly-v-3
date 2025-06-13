@@ -152,11 +152,11 @@ const App: React.FC = () => {
       case 1:
         return <GenderStep selectedGender={quizData.gender} onSelectGender={handleGenderSelect} />;
       case 2:
-        return <HeightStep height={String(quizData.height)} onHeightChange={(h: string) => updateQuizData('height', parseInt(h) || 0)} onNext={handleNextStep} />;
+        return <HeightStep height={String(quizData.height || 175)} onHeightChange={(h: string) => updateQuizData('height', parseInt(h) || 175)} onNext={handleNextStep} />;
       case 3:
-        return <WeightStep weight={String(quizData.weight)} onWeightChange={(w: string) => updateQuizData('weight', parseInt(w) || 0)} onNext={handleNextStep} />;
+        return <WeightStep weight={String(quizData.weight || 70)} onWeightChange={(w: string) => updateQuizData('weight', parseInt(w) || 70)} onNext={handleNextStep} />;
       case 4:
-        return <AgeStep age={String(quizData.age)} onAgeChange={(a: string) => updateQuizData('age', parseInt(a) || 0)} onNext={handleNextStep} />;
+        return <AgeStep age={String(quizData.age || 25)} onAgeChange={(a: string) => updateQuizData('age', parseInt(a) || 25)} onNext={handleNextStep} />;
       case 5:
         return <BodyShapeStep gender={quizData.gender} shapeType="belly" selectedShape={quizData.bellyShape} onSelectShape={handleBellyShapeSelect as (shape: BellyShapeKey | ChestShapeKey) => void} title="Select Your Belly Shape" subtitle="Choose the side view that best matches your belly shape"/>;
       case 6:
@@ -167,13 +167,13 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 sm:p-6 antialiased overflow-hidden touch-manipulation">
-      <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[100dvh] py-safe">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-center p-3 antialiased overflow-hidden touch-manipulation">
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center justify-center min-h-[100dvh] py-safe">
         <WelcomeScreen onStartQuiz={handleStartQuiz} isVisible={currentScreen === 'welcome'} />
 
         {/* Quiz content area: Only renders the QuizCard if currentScreen is 'quiz' AND not calculating */}
         {currentScreen === 'quiz' && !isCalculating && (
-          <QuizCard isVisible={quizContentVisible} className="w-full" animationType="slide">
+          <QuizCard isVisible={quizContentVisible} className="w-full max-h-[calc(100dvh-2rem)] overflow-y-auto" animationType="slide">
             <StepIndicator currentStep={currentStep} totalSteps={TOTAL_QUIZ_STEPS} />
             {renderStepContent()}
           </QuizCard>

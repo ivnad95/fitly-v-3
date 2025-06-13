@@ -42,8 +42,8 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       className={`
         liquid-glass-panel group
         rounded-2xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] overflow-hidden
-        p-4 sm:p-5
-        aspect-square w-full
+        p-5 sm:p-6
+        aspect-[4/5] w-full
         flex flex-col items-center justify-center 
         focus-visible:outline-none
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
@@ -52,7 +52,7 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
       {/* Image directly on the glass panel */}
-      <div className="w-full flex-grow flex items-center justify-center mb-2 sm:mb-3">
+      <div className="w-full flex-grow flex items-center justify-center mb-3 sm:mb-4">
         {!imageError ? (
           <img
             src={imageSrc}
@@ -60,11 +60,11 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
             aria-hidden="true"
             onError={() => setImageError(true)}
             className={`
-              max-w-[80%] sm:max-w-[85%] max-h-[80px] sm:max-h-[120px] md:max-h-[140px] object-contain 
+              max-w-full max-h-[180px] sm:max-h-[220px] md:max-h-[240px] object-contain 
               transform transition-all duration-300 ease-in-out
               ${isSelected 
-                ? 'scale-[1] opacity-100 group-hover:scale-[1.05]' 
-                : 'scale-[0.9] opacity-70 group-hover:scale-[0.95] group-hover:opacity-85'
+                ? 'scale-[1.1] opacity-100 group-hover:scale-[1.15]' 
+                : 'scale-[1] opacity-80 group-hover:scale-[1.05] group-hover:opacity-95'
               }
             `}
           />

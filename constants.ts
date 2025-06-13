@@ -59,9 +59,9 @@ export const heightOptions: HeightOption[] = [
 
 export const initialQuizData: QuizData = {
     gender: '',
-    height: 178,
-    weight: 67,
-    age: 30,
+    height: 175,
+    weight: 70,
+    age: 25,
     bellyShape: '',
     chestShape: ''
 };

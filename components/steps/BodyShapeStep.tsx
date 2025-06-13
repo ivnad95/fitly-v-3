@@ -30,9 +30,9 @@ const BodyShapeStep: React.FC<BodyShapeStepProps> = ({
 
   return (
     <div className="w-full max-w-sm mx-auto">
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-1.5 text-primary">{title}</h2>
-      <p className="text-center text-secondary mb-6 sm:mb-8 text-sm px-2">{subtitle}</p>
-      <div className="grid grid-cols-1 gap-4 sm:gap-5 px-4"> {/* Single column with consistent gap and horizontal padding */}
+      <h2 className="text-2xl font-bold text-center mb-1 text-primary">{title}</h2>
+      <p className="text-center text-secondary mb-6 text-sm px-1">{subtitle}</p>
+      <div className="grid grid-cols-1 gap-5 px-2"> {/* Increased gap and better horizontal padding */}
         {Object.entries(shapes).map(([key, imageUrl]) => (
           <BodyShapeOptionCard
             key={key}

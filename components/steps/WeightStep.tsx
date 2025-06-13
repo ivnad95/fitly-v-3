@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '../ui/Button';
 import WheelSelector from '../ui/WheelSelector';
 
@@ -9,6 +9,13 @@ interface WeightStepProps {
 }
 
 const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext }) => {
+  // Set default weight if empty
+  useEffect(() => {
+    if (!weight) {
+      onWeightChange('70'); // Default to 70 kg
+    }
+  }, [weight, onWeightChange]);
+
   const weightNum = parseFloat(weight);
   const isValidWeight = !isNaN(weightNum) && weightNum >= 40 && weightNum <= 150;
 
@@ -19,7 +26,7 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
   };
 
   return (
-    <div>
+    <div className="w-full max-w-sm mx-auto">
       <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-primary">Your Weight</h2>
       <WheelSelector
         value={weight}

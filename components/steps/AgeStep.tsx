@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '../ui/Button';
 import WheelSelector from '../ui/WheelSelector';
 
@@ -9,11 +9,18 @@ interface AgeStepProps {
 }
 
 const AgeStep: React.FC<AgeStepProps> = ({ age, onAgeChange, onNext }) => {
+  // Set default age if empty
+  useEffect(() => {
+    if (!age) {
+      onAgeChange('25'); // Default to 25 years
+    }
+  }, [age, onAgeChange]);
+
   const ageNum = parseFloat(age);
   const isValidAge = !isNaN(ageNum) && ageNum >= 16 && ageNum <= 100;
   
   return (
-    <div>
+    <div className="w-full max-w-sm mx-auto">
       <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-primary">Your Age</h2>
       <WheelSelector
         value={age}
