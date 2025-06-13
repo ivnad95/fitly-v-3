@@ -29,20 +29,24 @@ const BodyShapeStep: React.FC<BodyShapeStepProps> = ({
   const descriptions = shapeType === 'belly' ? bellyShapeDescriptions : chestShapeDescriptions;
 
   return (
-    <div className="w-full max-w-sm mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-1 text-primary">{title}</h2>
-      <p className="text-center text-secondary mb-6 text-sm px-1">{subtitle}</p>
-      <div className="grid grid-cols-1 gap-5 px-2"> {/* Increased gap and better horizontal padding */}
-        {Object.entries(shapes).map(([key, imageUrl]) => (
-          <BodyShapeOptionCard
-            key={key}
-            imageUrl={imageUrl}
-            label={key.charAt(0).toUpperCase() + key.slice(1)}
-            description={descriptions[key as keyof typeof descriptions]}
-            isSelected={selectedShape === key}
-            onClick={() => onSelectShape(key as ShapeKey)}
-          />
-        ))}
+    <div className="w-full max-w-sm mx-auto h-full flex flex-col">
+      <div className="flex-shrink-0 text-center mb-3">
+        <h2 className="text-xl font-bold text-primary mb-1">{title}</h2>
+        <p className="text-secondary text-sm px-1">{subtitle}</p>
+      </div>
+      <div className="flex-1 flex flex-col justify-center min-h-0">
+        <div className="grid grid-cols-1 gap-2 px-2"> {/* Reduced gap and padding for compact fit */}
+          {Object.entries(shapes).map(([key, imageUrl]) => (
+            <BodyShapeOptionCard
+              key={key}
+              imageUrl={imageUrl}
+              label={key.charAt(0).toUpperCase() + key.slice(1)}
+              description={descriptions[key as keyof typeof descriptions]}
+              isSelected={selectedShape === key}
+              onClick={() => onSelectShape(key as ShapeKey)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

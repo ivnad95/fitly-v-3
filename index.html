@@ -28,6 +28,7 @@
         overscroll-behavior: contain;
         will-change: scroll-position;
         transform: translateZ(0); /* Force hardware acceleration */
+        backface-visibility: hidden; /* Prevent flickering */
       }
 
       /* Improved wheel selector performance */
@@ -62,6 +63,21 @@
       /* Mobile touch optimizations */
       * {
         -webkit-tap-highlight-color: transparent;
+      }
+      
+      /* Prevent page-level scrolling */
+      html, body {
+        overflow: hidden;
+        height: 100%;
+        position: fixed;
+        width: 100%;
+      }
+      
+      /* Root container optimization */
+      #root {
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
       }
       
       /* Improve touch targets */

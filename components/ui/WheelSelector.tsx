@@ -35,8 +35,9 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
   const ITEM_HEIGHT = 60; // Increased from 56 for better touch targets
   const VISIBLE_ITEMS = 5; // Number of visible items
   const CENTER_INDEX = Math.floor(VISIBLE_ITEMS / 2);
-  const FRICTION = 0.95; // For momentum scrolling
-  const MIN_VELOCITY = 0.5; // Minimum velocity to continue momentum  // Generate values array based on min, max, and step
+  const FRICTION = 0.85; // More aggressive friction for faster deceleration
+  const MIN_VELOCITY = 0.2; // Lower threshold for better responsiveness
+  const VELOCITY_MULTIPLIER = 12; // Increased velocity scaling for faster scrolling  // Generate values array based on min, max, and step
   const generateValues = () => {
     const values = [];
     for (let i = minValue; i <= maxValue; i += step) {
@@ -213,7 +214,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
       const deltaTime = currentTime - lastTouchRef.current.time;
       
       if (deltaTime > 0) {
-        velocityRef.current = deltaY / deltaTime * 4; // Velocity scaling
+        velocityRef.current = deltaY / deltaTime * VELOCITY_MULTIPLIER; // Use the new velocity multiplier for faster response
       }
       
       lastTouchRef.current = { y: touch.clientY, time: currentTime };
@@ -241,7 +242,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
         if (!isUserScrolling) {
           snapToNearestItem();
         }
-      }, 100);
+      }, 30); // Reduced timeout for faster snapping
     };
 
     // Enhanced wheel event for desktop
@@ -252,14 +253,15 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
       const wheel = wheelRef.current;
       if (!wheel) return;
       
-      wheel.scrollTop += e.deltaY;
+      // Enhanced wheel scrolling with better velocity
+      wheel.scrollTop += e.deltaY * 0.8; // Slightly reduce wheel sensitivity for smoother control
       requestAnimationFrame(updateActiveItem);
       
       if (scrollEndTimer) clearTimeout(scrollEndTimer);
       scrollEndTimer = setTimeout(() => {
         isUserScrolling = false;
         snapToNearestItem();
-      }, 150);
+      }, 100); // Faster snapping for wheel events
     };
 
     // Enhanced CSS properties for smooth scrolling
@@ -267,6 +269,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
     wheel.style.overscrollBehavior = 'contain';
     (wheel.style as any).webkitOverflowScrolling = 'touch'; // iOS smooth scrolling
     wheel.style.transform = 'translateZ(0)'; // Force hardware acceleration
+    wheel.style.willChange = 'scroll-position, transform'; // Optimize for scrolling
     
     // Event listeners with proper options
     wheel.addEventListener('touchstart', handleTouchStart, { passive: true });

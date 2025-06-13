@@ -26,30 +26,34 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto">
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-primary">Your Weight</h2>
-      <WheelSelector
-        value={weight}
-        onChange={onWeightChange}
-        minValue={40}
-        maxValue={150}
-        step={1}
-        unit="kg"
-        alternateUnit={{
-          label: "lbs",
-          conversionFn: kgToPounds
-        }}
-        className="mb-8"
-      />
-      <Button 
-        onClick={onNext} 
-        disabled={!isValidWeight} 
-        variant="primary"
-        className="w-full py-4 px-6 touch-manipulation min-h-[48px]"
-        aria-label="Continue to next step"
-      >
-        Continue
-      </Button>
+    <div className="w-full max-w-sm mx-auto h-full flex flex-col">
+      <div className="flex-shrink-0 text-center mb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold text-primary">Your Weight</h2>
+      </div>
+      <div className="flex-1 flex flex-col justify-center min-h-0">
+        <WheelSelector
+          value={weight}
+          onChange={onWeightChange}
+          minValue={40}
+          maxValue={150}
+          step={1}
+          unit="kg"
+          alternateUnit={{
+            label: "lbs",
+            conversionFn: kgToPounds
+          }}
+          className="mb-6"
+        />
+        <Button 
+          onClick={onNext} 
+          disabled={!isValidWeight} 
+          variant="primary"
+          className="w-full py-4 px-6 touch-manipulation min-h-[48px] flex-shrink-0"
+          aria-label="Continue to next step"
+        >
+          Continue
+        </Button>
+      </div>
     </div>
   );
 };

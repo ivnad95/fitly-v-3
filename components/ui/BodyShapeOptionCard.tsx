@@ -42,17 +42,21 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
       className={`
         liquid-glass-panel group
         rounded-2xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] overflow-hidden
-        p-5 sm:p-6
-        aspect-[4/5] w-full
-        flex flex-col items-center justify-center 
+        p-2.5 sm:p-3
+        h-16 sm:h-18 w-full
+        flex items-center justify-start 
         focus-visible:outline-none
         hover:!bg-[var(--panel-bg-color-hover)] hover:border-[var(--panel-border-color-hover)]
+        ${isSelected 
+          ? 'scale-[1.02] border-[var(--accent-color-hex)] bg-[var(--panel-bg-color-active)]' 
+          : 'scale-100 hover:scale-[1.01]'
+        }
       `}
       style={{ willChange: 'transform, opacity, background-color, border-color, box-shadow' }}
       onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
     >
-      {/* Image directly on the glass panel */}
-      <div className="w-full flex-grow flex items-center justify-center mb-3 sm:mb-4">
+      {/* Image on the left side */}
+      <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center mr-2.5 sm:mr-3 flex-shrink-0">
         {!imageError ? (
           <img
             src={imageSrc}
@@ -60,21 +64,21 @@ const BodyShapeOptionCard: React.FC<BodyShapeOptionCardProps> = ({ imageUrl, lab
             aria-hidden="true"
             onError={() => setImageError(true)}
             className={`
-              max-w-full max-h-[180px] sm:max-h-[220px] md:max-h-[240px] object-contain 
+              w-full h-full object-contain 
               transform transition-all duration-300 ease-in-out
               ${isSelected 
-                ? 'scale-[1.1] opacity-100 group-hover:scale-[1.15]' 
+                ? 'scale-[1.1] opacity-100' 
                 : 'scale-[1] opacity-80 group-hover:scale-[1.05] group-hover:opacity-95'
               }
             `}
           />
         ) : (
-          <div className="text-secondary text-sm">Image not available</div>
+          <div className="text-secondary text-xs">Image not available</div>
         )}
       </div>
 
-      {/* Label only */}
-      <div className="text-center">
+      {/* Label on the right side */}
+      <div className="flex-1 text-left">
         <h3 className="text-sm sm:text-base font-semibold text-white">
           {label}
         </h3>
