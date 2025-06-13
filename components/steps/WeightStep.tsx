@@ -27,8 +27,8 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
 
   return (
     <div className="w-full max-w-sm mx-auto flex flex-col">
-      <div className="flex-shrink-0 text-center mb-4">
-        <h2 className="text-2xl sm:text-3xl font-bold text-primary">Your Weight</h2>
+      <div className="flex-shrink-0 text-center mb-3">
+        <h2 className="text-xl sm:text-2xl font-bold text-primary">Your Weight</h2>
       </div>
       <div className="flex-1 flex flex-col justify-center min-h-0 pb-6">
         <WheelSelector
@@ -42,7 +42,7 @@ const WeightStep: React.FC<WeightStepProps> = ({ weight, onWeightChange, onNext 
             label: "lbs",
             conversionFn: kgToPounds
           }}
-          className="mb-6"
+          className="mb-4"
         />
         <div className="mt-auto pt-4 pb-4 px-4">
           <Button 

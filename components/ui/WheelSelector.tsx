@@ -32,7 +32,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = ({
   const animationRef = useRef<number | null>(null);
 
   // Mobile-optimized constants for better UX
-  const ITEM_HEIGHT = 60; // Increased from 56 for better touch targets
+  const ITEM_HEIGHT = 50; // Reduced for more compact wheel selector
   const VISIBLE_ITEMS = 5; // Number of visible items
   const CENTER_INDEX = Math.floor(VISIBLE_ITEMS / 2);
   const FRICTION = 0.85; // More aggressive friction for faster deceleration
