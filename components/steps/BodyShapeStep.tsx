@@ -30,12 +30,12 @@ const BodyShapeStep: React.FC<BodyShapeStepProps> = ({
 
   return (
     <div className="w-full max-w-sm mx-auto h-full flex flex-col">
-      <div className="flex-shrink-0 text-center mb-3">
+      <div className="flex-shrink-0 text-center mb-4">
         <h2 className="text-xl font-bold text-primary mb-1">{title}</h2>
         <p className="text-secondary text-sm px-1">{subtitle}</p>
       </div>
       <div className="flex-1 flex flex-col justify-center min-h-0">
-        <div className="grid grid-cols-1 gap-2 px-2"> {/* Reduced gap and padding for compact fit */}
+        <div className="grid grid-cols-3 gap-3 px-2"> {/* 3 columns for square buttons */}
           {Object.entries(shapes).map(([key, imageUrl]) => (
             <BodyShapeOptionCard
               key={key}
