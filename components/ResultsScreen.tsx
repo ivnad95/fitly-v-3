@@ -6,32 +6,33 @@ import QuizCard from './QuizCard';
 const getFitMessage = (productType: ProductType, topSize: string, bottomSize: string): { title: string; description: string } => {
   const isTopProduct = productType !== 'Trousers';
   const size = isTopProduct ? topSize : bottomSize;
+  const sizeType = isTopProduct ? 'chest' : 'waist';
   
   switch (productType) {
     case 'Polo':
       return {
-        title: `${productType} - Size ${size}`,
-        description: `A ${size} polo will provide a comfortable fit with room for movement while maintaining a clean silhouette.`
+        title: `${productType} Recommendation`,
+        description: `Size ${size} polo will provide a comfortable fit around your ${sizeType} with room for movement while maintaining a clean silhouette.`
       };
     case 'T-Shirt':
       return {
-        title: `${productType} - Size ${size}`,
-        description: `A ${size} t-shirt offers the perfect balance of comfort and fit for everyday wear.`
+        title: `${productType} Recommendation`,
+        description: `Size ${size} t-shirt offers the perfect balance of comfort and fit for your ${sizeType} measurements for everyday wear.`
       };
     case 'Trousers':
       return {
-        title: `${productType} - Size ${size}`,
-        description: `${size} trousers will provide a comfortable fit around your waist with proper leg proportions.`
+        title: `${productType} Recommendation`,
+        description: `Size ${size} trousers will provide a comfortable fit around your ${sizeType} with proper leg proportions based on your body shape.`
       };
     case 'Midlayer':
       return {
-        title: `${productType} - Size ${size}`,
-        description: `A ${size} midlayer will fit comfortably over base layers while allowing room for movement.`
+        title: `${productType} Recommendation`,
+        description: `Size ${size} midlayer will fit comfortably around your ${sizeType} over base layers while allowing room for movement.`
       };
     case 'Hoodie':
       return {
-        title: `${productType} - Size ${size}`,
-        description: `A ${size} hoodie provides a relaxed fit perfect for layering and casual comfort.`
+        title: `${productType} Recommendation`,
+        description: `Size ${size} hoodie provides a relaxed fit around your ${sizeType} perfect for layering and casual comfort.`
       };
     default:
       return {
@@ -86,16 +87,19 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
         <h1 className="text-xl font-bold text-primary mb-1">Your Size Recommendations</h1>
         <p className="text-secondary text-xs">Based on your provided information</p>
       </div>
-      <div className="grid grid-cols-2 gap-2.5 mb-4">
-        <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
-        <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist" />
-        {/* Product-specific fit message spans full width */}
-        <div className="col-span-2">
-            {(() => {
-              const fitMessage = getFitMessage(results.productType, results.topSize, results.bottomSize);
-              return <ResultItem title={fitMessage.title} value={results.fitRecommendation} description={fitMessage.description} />;
-            })()}
-        </div>
+      <div className="grid grid-cols-1 gap-2.5 mb-4">
+        {/* Show only relevant size based on product type */}
+        {results.productType === 'Trousers' ? (
+          <ResultItem title="Waist Size" value={results.bottomSize} description="Estimated for your waist" />
+        ) : (
+          <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
+        )}
+        
+        {/* Product-specific fit message */}
+        {(() => {
+          const fitMessage = getFitMessage(results.productType, results.topSize, results.bottomSize);
+          return <ResultItem title={fitMessage.title} value={results.fitRecommendation} description={fitMessage.description} />;
+        })()}
       </div>
       <Button onClick={onRestartQuiz} variant="primary" size="large" className="w-full">
         <i className="fas fa-redo mr-2"></i>
