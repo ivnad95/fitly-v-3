@@ -35,7 +35,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
                 <p className="text-secondary text-sm mb-4">No results to display. Please complete the quiz.</p>
                 <Button onClick={onRestartQuiz} variant="primary" size="large">
                     <i className="fas fa-redo mr-2"></i>
-                    Take Quiz Again
+                    Start Over
                 </Button>
              </div>
         </QuizCard>
@@ -50,9 +50,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
       </div>
       <div className="grid grid-cols-2 gap-2.5 mb-4">
         <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
-        <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist/hips" />
-        <ResultItem title="Shoe Size (UK)" value={`UK ${results.shoeSizeUK}`} description="United Kingdom sizing" />
-        <ResultItem title="Shoe Size (EU)" value={`EU ${results.shoeSizeEU}`} description="European sizing" />
+        <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist" />
         {/* Fit Recommendation spans full width */}
         <div className="col-span-2">
             <ResultItem title="Fit Recommendation" value={results.fitRecommendation} description={results.fitDescription} />
@@ -60,7 +58,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
       </div>
       <Button onClick={onRestartQuiz} variant="primary" size="large" className="w-full">
         <i className="fas fa-redo mr-2"></i>
-        Take Quiz Again
+        Start Over
       </Button>
     </QuizCard>
   );
