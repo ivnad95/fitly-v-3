@@ -2,13 +2,14 @@ import React from 'react';
 import { ProductType } from '../../types';
 
 interface OptionCardProps {
-  iconClass: string;
+  iconClass?: string;
+  iconSrc?: string;
   text: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-const OptionCard: React.FC<OptionCardProps> = ({ iconClass, text, isSelected, onClick }) => {
+const OptionCard: React.FC<OptionCardProps> = ({ iconClass, iconSrc, text, isSelected, onClick }) => {
   return (
     <div
       onClick={onClick}
@@ -25,7 +26,20 @@ const OptionCard: React.FC<OptionCardProps> = ({ iconClass, text, isSelected, on
     >
       <div className={`text-2xl mb-2 transition-colors duration-300
         ${isSelected ? 'text-accent' : 'text-[rgba(var(--accent-color-rgb),0.7)]' }`}>
-        <i className={iconClass}></i>
+        {iconSrc ? (
+          <img 
+            src={iconSrc} 
+            alt={text}
+            className="w-6 h-6 mx-auto"
+            style={{
+              filter: isSelected 
+                ? 'brightness(0) saturate(100%) invert(64%) sepia(88%) saturate(3181%) hue-rotate(200deg) brightness(104%) contrast(101%)'
+                : 'brightness(0) saturate(100%) invert(64%) sepia(88%) saturate(3181%) hue-rotate(200deg) brightness(104%) contrast(101%) opacity(0.7)'
+            }}
+          />
+        ) : (
+          <i className={iconClass}></i>
+        )}
       </div>
       <div className={`font-semibold text-xs transition-colors duration-300
         ${isSelected ? 'text-primary' : 'text-secondary'}`}>
@@ -42,11 +56,11 @@ interface ProductTypeStepProps {
 
 const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ selectedProductType, onSelectProductType }) => {
   const productOptions = [
-    { type: 'Polo' as ProductType, icon: 'fas fa-shirt', text: 'Polo' },
-    { type: 'T-Shirt' as ProductType, icon: 'fas fa-tshirt', text: 'T-Shirt' },
-    { type: 'Trousers' as ProductType, icon: 'fas fa-user-tie', text: 'Trousers' },
-    { type: 'Midlayer' as ProductType, icon: 'fas fa-layer-group', text: 'Midlayer' },
-    { type: 'Hoodie' as ProductType, icon: 'fas fa-user-ninja', text: 'Hoodie' }
+    { type: 'Polo' as ProductType, iconClass: 'fas fa-shirt', text: 'Polo' },
+    { type: 'T-Shirt' as ProductType, iconClass: 'fas fa-tshirt', text: 'T-Shirt' },
+    { type: 'Trousers' as ProductType, iconSrc: '/shapes/icons/trusers.svg', text: 'Trousers' },
+    { type: 'Midlayer' as ProductType, iconClass: 'fas fa-layer-group', text: 'Midlayer' },
+    { type: 'Hoodie' as ProductType, iconSrc: '/shapes/icons/hoodie.svg', text: 'Hoodie' }
   ];
 
   return (
@@ -57,7 +71,8 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ selectedProductType, 
         {productOptions.slice(0, 4).map((product) => (
           <OptionCard
             key={product.type}
-            iconClass={product.icon}
+            iconClass={product.iconClass}
+            iconSrc={product.iconSrc}
             text={product.text}
             isSelected={selectedProductType === product.type}
             onClick={() => onSelectProductType(product.type)}
@@ -65,7 +80,8 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ selectedProductType, 
         ))}
         <div className="col-span-2">
           <OptionCard
-            iconClass={productOptions[4].icon}
+            iconClass={productOptions[4].iconClass}
+            iconSrc={productOptions[4].iconSrc}
             text={productOptions[4].text}
             isSelected={selectedProductType === productOptions[4].type}
             onClick={() => onSelectProductType(productOptions[4].type)}
