@@ -1,6 +1,7 @@
 export type Gender = 'male' | 'female' | '';
 export type BellyShapeKey = 'flatter' | 'average' | 'rounded' | '';
 export type ChestShapeKey = 'slimmer' | 'average' | 'broader' | '';
+export type ProductType = 'Polo' | 'T-Shirt' | 'Trousers' | 'Midlayer' | 'Hoodie' | '';
 
 export interface QuizData {
     gender: Gender;
@@ -9,6 +10,7 @@ export interface QuizData {
     age: number; // years
     bellyShape: BellyShapeKey;
     chestShape: ChestShapeKey;
+    productType: ProductType;
 }
 
 export interface BodyShapeCategory {
@@ -45,6 +47,7 @@ export interface SizeResult {
     shoeSizeEU: string;
     fitRecommendation: string;
     fitDescription: string;
+    productType: ProductType;
 }
 
 export type ScreenView = 'welcome' | 'quiz' | 'results';

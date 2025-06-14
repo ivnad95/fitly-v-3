@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { QuizData, SizeResult, ScreenView, Gender, BellyShapeKey, ChestShapeKey } from './types';
+import { QuizData, SizeResult, ScreenView, Gender, BellyShapeKey, ChestShapeKey, ProductType } from './types';
 import { TOTAL_QUIZ_STEPS, initialQuizData } from './constants';
 import WelcomeScreen from './components/WelcomeScreen';
 import QuizCard from './components/QuizCard';
@@ -9,6 +9,7 @@ import HeightStep from './components/steps/HeightStep';
 import WeightStep from './components/steps/WeightStep';
 import AgeStep from './components/steps/AgeStep';
 import BodyShapeStep from './components/steps/BodyShapeStep';
+import ProductTypeStep from './components/steps/ProductTypeStep';
 import LoadingScreen from './components/LoadingScreen';
 import ResultsScreen from './components/ResultsScreen';
 
@@ -81,9 +82,14 @@ const App: React.FC = () => {
     handleNextStep();
   }, [updateQuizData, handleNextStep]);
 
+  const handleProductTypeSelect = useCallback((productType: ProductType) => {
+    updateQuizData('productType', productType);
+    handleNextStep();
+  }, [updateQuizData, handleNextStep]);
+
 
   const calculateSizes = (data: QuizData): SizeResult => {
-    const { gender, height, weight, bellyShape, chestShape } = data;
+    const { gender, height, weight, bellyShape, chestShape, productType } = data;
     const bmi = weight > 0 && height > 0 ? weight / ((height / 100) ** 2) : 0;
     
     let topSize: string, bottomSize: string, shoeSizeUKNum: number, shoeSizeEUNum: number;
@@ -129,7 +135,8 @@ const App: React.FC = () => {
         shoeSizeUK: shoeSizeUKNum.toFixed(shoeSizeUKNum % 1 === 0 ? 0 : 1),
         shoeSizeEU: shoeSizeEUNum.toFixed(shoeSizeEUNum % 1 === 0 ? 0 : 1),
         fitRecommendation,
-        fitDescription
+        fitDescription,
+        productType
     };
   };
 
@@ -161,6 +168,8 @@ const App: React.FC = () => {
         return <BodyShapeStep gender={quizData.gender} shapeType="belly" selectedShape={quizData.bellyShape} onSelectShape={handleBellyShapeSelect as (shape: BellyShapeKey | ChestShapeKey) => void} title="Select Your Belly Shape" subtitle="Choose the side view that best matches your belly shape"/>;
       case 6:
         return <BodyShapeStep gender={quizData.gender} shapeType="chest" selectedShape={quizData.chestShape} onSelectShape={handleChestShapeSelect as (shape: BellyShapeKey | ChestShapeKey) => void} title="Select Your Chest Shape" subtitle="Choose the front view that best matches your chest/torso shape"/>;
+      case 7:
+        return <ProductTypeStep selectedProductType={quizData.productType} onSelectProductType={handleProductTypeSelect} />;
       default:
         return null;
     }

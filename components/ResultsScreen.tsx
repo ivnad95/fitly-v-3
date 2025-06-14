@@ -1,7 +1,45 @@
 import React from 'react';
-import { SizeResult } from '../types';
+import { SizeResult, ProductType } from '../types';
 import Button from './ui/Button';
 import QuizCard from './QuizCard';
+
+const getFitMessage = (productType: ProductType, topSize: string, bottomSize: string): { title: string; description: string } => {
+  const isTopProduct = productType !== 'Trousers';
+  const size = isTopProduct ? topSize : bottomSize;
+  
+  switch (productType) {
+    case 'Polo':
+      return {
+        title: `${productType} - Size ${size}`,
+        description: `A ${size} polo will provide a comfortable fit with room for movement while maintaining a clean silhouette.`
+      };
+    case 'T-Shirt':
+      return {
+        title: `${productType} - Size ${size}`,
+        description: `A ${size} t-shirt offers the perfect balance of comfort and fit for everyday wear.`
+      };
+    case 'Trousers':
+      return {
+        title: `${productType} - Size ${size}`,
+        description: `${size} trousers will provide a comfortable fit around your waist with proper leg proportions.`
+      };
+    case 'Midlayer':
+      return {
+        title: `${productType} - Size ${size}`,
+        description: `A ${size} midlayer will fit comfortably over base layers while allowing room for movement.`
+      };
+    case 'Hoodie':
+      return {
+        title: `${productType} - Size ${size}`,
+        description: `A ${size} hoodie provides a relaxed fit perfect for layering and casual comfort.`
+      };
+    default:
+      return {
+        title: 'Size Recommendation',
+        description: 'Perfect fit for your body measurements.'
+      };
+  }
+};
 
 interface ResultsScreenProps {
   results: SizeResult | null;
@@ -51,9 +89,12 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ results, onRestartQuiz, i
       <div className="grid grid-cols-2 gap-2.5 mb-4">
         <ResultItem title="Top Size" value={results.topSize} description="Estimated for your chest" />
         <ResultItem title="Bottom Size" value={results.bottomSize} description="Estimated for your waist" />
-        {/* Fit Recommendation spans full width */}
+        {/* Product-specific fit message spans full width */}
         <div className="col-span-2">
-            <ResultItem title="Fit Recommendation" value={results.fitRecommendation} description={results.fitDescription} />
+            {(() => {
+              const fitMessage = getFitMessage(results.productType, results.topSize, results.bottomSize);
+              return <ResultItem title={fitMessage.title} value={results.fitRecommendation} description={fitMessage.description} />;
+            })()}
         </div>
       </div>
       <Button onClick={onRestartQuiz} variant="primary" size="large" className="w-full">
