@@ -24,7 +24,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStartQuiz, isVisible })
       </div>
       <Button onClick={onStartQuiz} fullWidth variant="primary" size="large" className="font-semibold">
         <i className="fas fa-play mr-2.5"></i>
-        Start Size Quiz
+        Start
       </Button>
     </QuizCard>
   );
