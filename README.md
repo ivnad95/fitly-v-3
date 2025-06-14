@@ -1,11 +1,10 @@
-<<<<<<< HEAD
-# Fitly Smart Size Clothes
+# FitMe Smart Size Clothes
 
 A smart clothing size quiz application that helps users find their perfect fit.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js
 
 1. Install dependencies:
    `npm install`
