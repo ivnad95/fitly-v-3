@@ -48,6 +48,7 @@ export interface SizeResult {
     fitRecommendation: string;
     fitDescription: string;
     productType: ProductType;
+    gender: Gender;
 }
 
 export type ScreenView = 'welcome' | 'quiz' | 'results';

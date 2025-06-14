@@ -136,7 +136,8 @@ const App: React.FC = () => {
         shoeSizeEU: shoeSizeEUNum.toFixed(shoeSizeEUNum % 1 === 0 ? 0 : 1),
         fitRecommendation,
         fitDescription,
-        productType
+        productType,
+        gender
     };
   };
 

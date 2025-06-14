@@ -42,11 +42,11 @@ interface ProductTypeStepProps {
 
 const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ selectedProductType, onSelectProductType }) => {
   const productOptions = [
-    { type: 'Polo' as ProductType, icon: 'fas fa-tshirt', text: 'Polo' },
+    { type: 'Polo' as ProductType, icon: 'fas fa-shirt', text: 'Polo' },
     { type: 'T-Shirt' as ProductType, icon: 'fas fa-tshirt', text: 'T-Shirt' },
-    { type: 'Trousers' as ProductType, icon: 'fas fa-vest', text: 'Trousers' },
+    { type: 'Trousers' as ProductType, icon: 'fas fa-user-tie', text: 'Trousers' },
     { type: 'Midlayer' as ProductType, icon: 'fas fa-layer-group', text: 'Midlayer' },
-    { type: 'Hoodie' as ProductType, icon: 'fas fa-hood', text: 'Hoodie' }
+    { type: 'Hoodie' as ProductType, icon: 'fas fa-user-ninja', text: 'Hoodie' }
   ];
 
   return (
